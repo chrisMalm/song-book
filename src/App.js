@@ -2,7 +2,7 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div data-testid="header" className="App">
   Song Book
     </div>
   );
