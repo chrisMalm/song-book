@@ -9,23 +9,30 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 14
+        node-version: 20
 
     - name: Install dependencies
       run: npm install
 
     - name: Run tests
-      run: npm test
+      id: check
+      run: |
+        npm test
+        if [ $? -eq 0 ]; then
+          echo "::set-output name=result::success"
+        else
+          echo "::set-output name=result::failure"
+        fi
 
   deploy:
         runs-on: ubuntu-latest
         needs: test
-        if: github.event_name == 'pull_request' && github.ref == 'refs/heads/dev' && success()
+        if: github.event_name == 'pull_request' && github.ref == 'refs/heads/dev' && needs.test.outputs.result == 'success'
     
         steps:
         - name: Checkout code
