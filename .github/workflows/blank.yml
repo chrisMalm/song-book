@@ -2,6 +2,10 @@ on:
   pull_request:
     branches:
       - dev
+env:  
+VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+VERCEL_ENV: develop
 
 jobs:
   test:
@@ -41,8 +45,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: test
-    if: github.event_name == 'pull_request' && github.ref == 'refs/heads/dev' && needs.test.outputs.result == 'success'
-
     steps:
     - name: Debug Info
       run: |
@@ -62,9 +64,5 @@ jobs:
       run: npm install -g vercel
 
     - name: Deploy to Vercel
-      run: vercel
-      env:
-        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        VERCEL_ENV: develop
+      run: vercel --token=${{secrets.VERCEL_TOKEN}}
+  
