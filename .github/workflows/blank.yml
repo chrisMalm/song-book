@@ -10,10 +10,7 @@ jobs:
       result: ${{ steps.check.outputs.result }}
 
     steps:
-    - name: Debug Info
-      run: |
-        echo "Running tests"
-        echo "Result: ${{ steps.check.outputs.result }}"
+  
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -34,6 +31,10 @@ jobs:
         else
           echo "::set-output name=result::failure"
         fi
+    - name: Debug Info
+      run: |
+          echo "Running tests"
+          echo "Result: ${{ steps.check.outputs.result }}"
 
   deploy:
     runs-on: ubuntu-latest
