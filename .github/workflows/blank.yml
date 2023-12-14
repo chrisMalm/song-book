@@ -10,6 +10,10 @@ jobs:
       result: ${{ steps.check.outputs.result }}
 
     steps:
+    - name: Debug Info
+      run: |
+        echo "Running tests"
+        echo "Result: ${{ steps.check.outputs.result }}"
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -37,6 +41,12 @@ jobs:
     if: github.event_name == 'pull_request' && github.ref == 'refs/heads/dev' && needs.test.outputs.result == 'success'
 
     steps:
+    - name: Debug Info
+      run: |
+              echo "Deploying to Vercel"
+              echo "Event Name: ${{ github.event_name }}"
+              echo "Ref: ${{ github.ref }}"
+              echo "Test Result: ${{ needs.test.outputs.result }}"
     - name: Checkout code
       uses: actions/checkout@v3
 
