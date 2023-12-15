@@ -1,12 +1,11 @@
 import React from "react";
-import Songs from "./components/songs"
 
- const App =  () => {
+ const AddSong =  () => {
     return (
       <div className="container">
-        <Songs />
+            Add song        
       </div> 
       ) 
 }
 
-export default App;
+export default AddSong;
