@@ -1,13 +1,38 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  
+} from "react-router-dom";
 
+const AddSong = React.lazy(() => import('./components/AddSong'));
+const SongDetail = React.lazy(() => import('./components/SongDetail'));
+
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>,
+  },
+  {
+    path: "songs/create",
+    element: <AddSong/>,
+  },
+  {
+    path: "/songs/:id",
+    element: <SongDetail/>,
+  },
+]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+     <Suspense fallback={<>loading</>}>
+        <RouterProvider router={router} />
+      </Suspense>
   </React.StrictMode>
 );
 
