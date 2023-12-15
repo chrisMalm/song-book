@@ -6,6 +6,6 @@ describe("App", () => {
   it("should show the div text", () => {
   render(<App />);
     const val = screen.getByTestId("header")
-    expect(val).toHaveTextContent("Song Book")
+    expect(val).toHaveTextContent("Songs")
   })
 })
